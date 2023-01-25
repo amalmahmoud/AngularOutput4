@@ -1,4 +1,6 @@
+import { FormService } from './../Services/form.service';
 import { Component } from '@angular/core';
+import {Router } from '@angular/router';
 import { OnInit } from '@angular/core';
 import { FormGroup,FormControl,Validators, FormArray, Form } from '@angular/forms';
 @Component({
@@ -11,7 +13,9 @@ export class ReactiveFormComponent implements OnInit {
 
   reactiveForm:FormGroup;
   formStatus:any;
+  constructor(private formService:FormService,private router:Router){
 
+  }
   ngOnInit()
   {
     //We have created our form 
@@ -47,6 +51,15 @@ export class ReactiveFormComponent implements OnInit {
   }
   onSubmit()
   {
+
+
+    this.formService.setData( { firstname: this.reactiveForm.get('firstname').value,
+    lastname:this.reactiveForm.get('lastname').value,
+    age:this.reactiveForm.get('age').value,
+    email:this.reactiveForm.get('email').value,
+    country:this.reactiveForm.get('country').value
+  });
+    this.router.navigate(['details'])
     console.log(this.reactiveForm)
     if(this.formStatus === 'VALID')
     {
